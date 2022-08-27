@@ -53,36 +53,66 @@ public class ArraySet<E> implements Set<E>
 	@Override
 	public boolean add(E e) {
 		// TODO Auto-generated method stub
-		return _List.add(e);
-	}
+		if (_List.contains(e)) {
+			return false;
+		}
+		else {
+			return _List.add(e);
+		}	
+	}	
 
 	@Override
 	public boolean remove(Object o) {
 		// TODO Auto-generated method stub
-		return _List.contains(o);
+		return _List.remove(o);
 	}
+	///////////
 
 	@Override
 	public boolean containsAll(Collection<?> c) {
 		// TODO Auto-generated method stub
+		//loop through elements in collection
+		//for element in collection
+		//if not contained in list return false
+		//if all are contained in list return true
+		
+		
 		return _List.containsAll(c);
 	}
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
+		//loop through elements in collection
+		//if element is in list add nothing
+		//if element is not in list add element
+		//if anything has been added return true
+		//if nothing has been added return false
+		
+		
+		return false;
 		// TODO Auto-generated method stub
-		return _List.addAll(c);
-	}
+		
+		}
+	
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
 		// TODO Auto-generated method stub
+		//loop through elements in collect
+		//if an element in the list is not in the collection, remove it
+		//return true
+		//if no elements are deleted
+		//return false
 		return _List.retainAll(c);
 	}
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
 		// TODO Auto-generated method stub
+		//loop through collection
+		//if an element in the list is in the collection remove it
+		//return true
+		//if nothing is removed return false
 		return _List.removeAll(c);
 	}
 
