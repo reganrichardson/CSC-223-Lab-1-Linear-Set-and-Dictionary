@@ -52,9 +52,7 @@ class ArraySetTest
 		//int 3 should not be in the array
 		assertFalse(ArraySet.contains(3));
 		//add 3
-		ArraySet.add(3);
-		//check element has been added
-		assertTrue(ArraySet.contains(3));
+		assertTrue(ArraySet.add(3));
 		//check that the size of the array is now 1
 		assertEquals(1,ArraySet.size());
 		
@@ -66,7 +64,30 @@ class ArraySetTest
 	@Test
 	void testAddAllCollectionOfQextendsE()
 	{
+		//Clear set
+		ArraySet.clear();
+		assertEquals(0 , ArraySet.size());
 		
+		//Test 1: Add to an empty set- should be true
+		//call add several on test set
+		addSeveral(testSet);
+		//add all to Arrayset
+		assertTrue(ArraySet.addAll(testSet));
+		//check that everything was added to arrayset
+		assertEquals(4, ArraySet.size());
+		
+		
+		//Test 2: Add when test set contains no new elements- should be false
+		//try adding test set again
+		assertFalse(ArraySet.addAll(testSet));
+		
+		//Test 3: Add when test set contains some new elements- should be true
+		//clear and add array set, 3
+		clearAdd(ArraySet, 3);
+		//add test set
+		assertTrue(ArraySet.addAll(testSet));
+		//check that there are 4 things in Array set
+		assertEquals(4, ArraySet.size());		
 	}
 
 	@Test
@@ -89,10 +110,11 @@ class ArraySetTest
 		//Test 3: retain some elements - should be true
 		//build second collection with some elements from ArraySet
 		testSet.add(3);
+		testSet.add(4);
 		//only some elements should remain- should be true
 		assertTrue(ArraySet.retainAll(testSet));
-		//check that there is only one element in the set
-		assertEquals(1, ArraySet.size());
+		//check that there are 2 elements in the set
+		assertEquals(2, ArraySet.size());
 		
 		//Test 4: retain none when testSet is nonempty- should be true
 		//call clear and add method with 5 as param
@@ -153,6 +175,8 @@ class ArraySetTest
 		addSeveral(ArraySet);
 		//Remove test set from arraySet
 		assertFalse(ArraySet.removeAll(testSet));
+		//check that ArraySet size is now 4
+		assertEquals(4, ArraySet.size());
 		
 		//Test 5: Remove no elements when test Set is empty- should be false
 		//Clear test Set
@@ -161,12 +185,48 @@ class ArraySetTest
 		addSeveral(ArraySet);
 		//Remove test set from arraySet
 		assertFalse(ArraySet.removeAll(testSet));
+		//check that ArraySet size is now 4
+		assertEquals(4, ArraySet.size());
 		
 	}
 
 	@Test
 	void testAddAllIntCollectionOfQextendsE()
 	{
+		//Clear set
+		ArraySet.clear();
+		assertEquals(0 , ArraySet.size());
+	
+		//Test 1: Add collection to nonempty set at index 0
+		//Add 1 to array set
+		ArraySet.add(0, 1);
+		//Add 4,5 to testSet
+		addSeveral(testSet);
+		//add collection at index 0
+		assertTrue(ArraySet.addAll(0, testSet));
+		//check that 3 is at index 0
+		assertEquals(3, ArraySet.get(0));
 		
+		//Test 2: Add collection to set at end of list
+		//clear set
+		ArraySet.clear();
+		ArraySet.add(0, 1);
+		//add collection at end of the list
+		assertTrue(ArraySet.addAll(ArraySet.size(), testSet));
+		//check that 3 is at index 
+		assertEquals(9, ArraySet.get(ArraySet.size()-1));
+		
+		//Test 3: Add collection to set in the middle of list
+		//clear set
+		ArraySet.clear();
+		//add more elements to array
+		ArraySet.add(0, 1);
+		ArraySet.add(1,2);
+		ArraySet.add(2,3);
+		//add collection at end of the list
+		assertTrue(ArraySet.addAll(1, testSet));
+		//check that 3 is at index 
+		assertEquals(3, ArraySet.get(1));
+				
 	}
 }
