@@ -19,7 +19,7 @@ public class ParallelArrayDictionary<Key , Value> implements Map<Key, Value>
 
 	public ParallelArrayDictionary()
 	{
-		// TODO Auto-generated constructor stub this is silly
+		// TODO Auto-generated constructor stub
 	}
 
 
@@ -65,17 +65,22 @@ public class ParallelArrayDictionary<Key , Value> implements Map<Key, Value>
 	public Value get(Object key) {
 		// TODO Auto-generated method stub
 		//check if the key is in the dictionary
-		//if(_values.contains(key)){
+		if(_values.contains(key)){
 			//find the index at the keys list
+			int i = 0;
+			
+			for (i=0; i< _keys.size() ; i++) {
+				
+			}
 			
 			//find the value at in the values list at the index and return
 			
 			
 		//}
 		//if not return null
-		//else{
+		else{
 		return null;
-		//}
+		}
 	}
 
 
@@ -92,6 +97,7 @@ public class ParallelArrayDictionary<Key , Value> implements Map<Key, Value>
 	@Override
 	public Value remove(Object key) {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
