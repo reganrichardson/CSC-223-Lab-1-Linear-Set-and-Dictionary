@@ -10,7 +10,22 @@ import java.util.Spliterator;
 
 public class ArraySet<E> implements List<E>, Set<E>
 {
-
+	protected ArrayList<E> _List;
+	
+	public ArraySet() {
+	_List = new ArrayList<E>(); 
+	}
+	
+	public ArraySet(Collection<? extends E> c) {
+		for (E item : c) {
+			if (_List.contains(item)) {
+				}
+			else {
+				_List.add(item);
+			}
+		}
+	}
+	
 	@Override
 	public boolean addAll(int index, Collection<? extends E> c) {
 		// TODO Auto-generated method stub
@@ -69,13 +84,6 @@ public class ArraySet<E> implements List<E>, Set<E>
 	public List<E> subList(int fromIndex, int toIndex) {
 		// TODO Auto-generated method stub
 		return _List.subList(fromIndex, toIndex);
-	}
-
-	
-	protected ArrayList<E> _List;
-	public ArraySet()
-	{
-		_List = new ArrayList<E>();
 	}
 	
 	@Override
