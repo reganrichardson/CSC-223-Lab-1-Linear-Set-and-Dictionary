@@ -5,247 +5,198 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Test ArraySet Class
+ * @author ReganRichardson
+ *
+ */
 class ArraySetTest
 
 {
-	//Create newSet
-	ArraySet<Integer> newSet = new ArraySet<Integer>();
-	ArraySet<Integer> testSet = new ArraySet<Integer>();
-	
-	
 	/**
-	 * Adds several elements to an array
-	 * @param list
+	 * Helper method, populates new arraySet
+	 * @return
 	 */
-	private void addSeveral(ArraySet<Integer> list) {
-		list.add(3);
-		list.add(4);
-		list.add(6);
-		list.add(9);
-	}
-	
 	public ArraySet<Integer> getPopulated(){
-		
-		ArrayList<Integer> lst = new ArrayList<Integer>(Arrays.asList(1,7,12));
-		
+		//Create array list with elements 1,2,3,4
+		List<Integer> lst = new ArrayList<Integer>(Arrays.asList(1,2,3,4));
+		//create array set using list as a collection
 		ArraySet<Integer> s = new ArraySet<Integer>(lst);
+		//return Array set
 		return s;
 	}
 	
 	/**
-	 * Clears newList and adds a single element to it
-	 * @param newList
-	 * @param num
+	 * Tests newSet from ArraySet class
 	 */
-	private void clearAdd(ArraySet<Integer> newList, int num) {
-		newList.clear();
-		newList.add(num);
-	}
-	
 	@Test
 	void testnewSetCollectionOfE()
 	{
+		//Test 1: Initialize with a collection with no repeated values
+		//Create ArraySet and call getPopulated
+		ArraySet<Integer> colSet = getPopulated();
+		//Check that there are 4 elements in set
+		assertEquals(4, colSet.size());
 		
-		
-		//Test 1: Collection of nonrepeated integers - should be true
-		addSeveral(testSet);
-		//test set should contain 4 elements
-		assertEquals(4, testSet.size());
-		
-		//Test 2: Creating an arrayset by adding repeats - should be false
-		testSet.add(3);
-		assertEquals(4, testSet.size());
+		//Test 2: Initialize with a collection containing repeated values
+		//Create a list with repeated values
+		List<Integer> lst = new ArrayList<Integer>(Arrays.asList(1,2,3,4,1,2));
+		//Create an arrayset with list values
+		ArraySet<Integer> s = new ArraySet<Integer>(lst);
+		//check that only 4 elements are in set
+		assertEquals(4, s.size());
 	}
 
+	/**
+	 * Tests Add method
+	 */
 	@Test
 	void testAddE()
 	{
-		//Clear set
-		newSet.clear();
-		assertEquals(0 , newSet.size());
+		//create new arrayset, and call getpopulated
+		ArraySet<Integer> newSet = getPopulated();
 		
-		//Test 1: Adding an element that is not in the array
-		//int 3 should not be in the array
-		assertFalse(newSet.contains(3));
-		//add 3
-		assertTrue(newSet.add(3));
-		//check that the size of the array is now 1
-		assertEquals(1,newSet.size());
+		//Test 1: Adding an element that is not in the array- should be true
+		//add an element not in mewSet, should be true
+		assertTrue(newSet.add(5));
+		//check that the size of the array is now 5
+		assertEquals(5,newSet.size());
 		
-		//Test 2: Attempting to add an element that is in the array
-		//Cannot add 3
-		assertFalse(newSet.add(3));
+		//Test 2: Attempting to add an element that is in the array- should be false
+		//Try adding 5
+		assertFalse(newSet.add(5));
 	}
 
+	/**
+	 * Test addAll method
+	 */
 	@Test
 	void testAddAllCollectionOfQextendsE()
 	{
-		//Clear set
-		newSet.clear();
-		assertEquals(0 , newSet.size());
+		//create new arraySet, and call getPopulated
+		ArraySet<Integer> newSet = getPopulated();
+		//Create newLst with elements not in newSet
+		List<Integer> newLst = new ArrayList<Integer>(Arrays.asList(5,6));
 		
-		//Test 1: Add to an empty set- should be true
-		//call add several on test set
-		addSeveral(testSet);
-		//add all to newset
-		assertTrue(newSet.addAll(testSet));
-		//check that everything was added to newset
-		assertEquals(4, newSet.size());
+		//Test 1: Add when test set contains some new elements- should be true
+		//add newLst
+		assertTrue(newSet.addAll(newLst));
+		//check that there are 6 things in new set
+		assertEquals(6, newSet.size());
+		
+		//Test 2: Add when collection contains no new elements- should be false
+		//try adding newLst again
+		assertFalse(newSet.addAll(newLst));
+		//there should still be 6 things in new set
+		assertEquals(6, newSet.size());
 		
 		
-		//Test 2: Add when test set contains no new elements- should be false
-		//try adding test set again
-		assertFalse(newSet.addAll(testSet));
-		
-		//Test 3: Add when test set contains some new elements- should be true
-		//clear and add new set, 3
-		clearAdd(newSet, 3);
-		//add test set
-		assertTrue(newSet.addAll(testSet));
-		//check that there are 4 things in new set
-		assertEquals(4, newSet.size());		
 	}
-
+	/**
+	 * Test retain all method
+	 */
 	@Test
 	void testRetainAll()
 	{
-		//Clear set
-		newSet.clear();
-		assertEquals(0 , newSet.size());
+		ArraySet<Integer> newSet = getPopulated();
 		
-		//Test 1: retain when set is empty- should be false
-		assertFalse(newSet.retainAll(newSet));
-		
-		//Test 2: retain all- should be false
-		//call add some method
-		addSeveral(newSet);
-		assertFalse(newSet.retainAll(newSet));
-		//check that newSet size is now 0
+		//Test 1: retain all- should be false
+		List<Integer> newLst = new ArrayList<Integer>(Arrays.asList(1,2,3,4));
+		assertFalse(newSet.retainAll(newLst));
+		//check that newSet size is now 4
 		assertEquals(4, newSet.size());
 		
-		//Test 3: retain some elements - should be true
+		//Test 2: retain some elements - should be true
 		//build second collection with some elements from newSet
-		testSet.add(3);
-		testSet.add(4);
+		List<Integer> twoLst = new ArrayList<Integer>(Arrays.asList(1,2));
+		
 		//only some elements should remain- should be true
-		assertTrue(newSet.retainAll(testSet));
+		assertTrue(newSet.retainAll(twoLst));
 		//check that there are 2 elements in the set
 		assertEquals(2, newSet.size());
 		
-		//Test 4: retain none when testSet is nonempty- should be true
-		//call clear and add method with 5 as param
-		clearAdd(testSet, 5);
-		//call add several on newSet
-		addSeveral(newSet);
+		//Test 4: retain none when testSet- should be true
+		ArraySet<Integer> testSet = getPopulated();
+		List<Integer> threeLst = new ArrayList<Integer>(Arrays.asList(5,6));
 		//test that nothing is retained
-		assertTrue(newSet.retainAll(testSet));
+		assertTrue(testSet.retainAll(threeLst));
 		//check that newSet size is now 0
-		assertEquals(0, newSet.size());
-		
-		//Test 5: retain non when testSet is empty- should be true
-		//clear test set
-		testSet.clear();
-		//call add Several
-		addSeveral(newSet);
-		//test that none are retained
-		assertTrue(newSet.retainAll(testSet));
-		//check that newSet size is now 0
-		assertEquals(0, newSet.size());
+		assertEquals(0, testSet.size());
 		
 	}
-
+	/**
+	 * Test removeAll method
+	 */
 	@Test
 	void testRemoveAll()
 	{
-		//Clear set
-		newSet.clear();
-		assertEquals(0 , newSet.size());
+		ArraySet<Integer> newSet = new ArraySet<Integer>();;
 		
 		//Test 1: Remove on an empty set- should be false
 		assertFalse(newSet.removeAll(newSet));
 		
-		//Test 2: Remove all elements- should be true
-		//call add several on test Set
-		addSeveral(testSet);
-		//call add several on newSet
-		addSeveral(newSet);
+		//Test 2: Remove no elements- should be false
+		newSet = getPopulated();
+		List<Integer> newLst = new ArrayList<Integer>(Arrays.asList(5,6));
+		//Remove Lst from arraySet
+		assertFalse(newSet.removeAll(newLst));
+		//check that newSet size is now 4
+		assertEquals(4, newSet.size());
+				
+		//Test 3: Remove some elements- should be true
+		List<Integer> twoLst = new ArrayList<Integer>(Arrays.asList(1,2));
+		//Remove testSet from newSet
+		assertTrue(newSet.removeAll(twoLst));
+		//check that newSet size is now 3
+		assertEquals(2, newSet.size());
+		
+		//Test 4: Remove all elements- should be true
+		 List<Integer> threeLst = new ArrayList<Integer>(Arrays.asList(3,4));
 		//should return true
-		assertTrue(newSet.removeAll(testSet));
+		assertTrue(newSet.removeAll(threeLst));
 		//check that newSet size is now 0
 		assertEquals(0, newSet.size());
 		
-		//Test 3: Remove some elements- should be true
-		//call clear and add on test set, param 3
-		clearAdd(testSet, 3);
-		//call add several on newSet
-		addSeveral(newSet);
-		//Remove testSet from newSet
-		assertTrue(newSet.removeAll(testSet));
-		//check that newSet size is now 3
-		assertEquals(3, newSet.size());
 		
-		//Test 4: Remove no elements when test Set is nonempty- should be false
-		//call clear and add on test set, param 5
-		clearAdd(testSet, 5);
-		//call add several on newSet
-		addSeveral(newSet);
-		//Remove test set from arraySet
-		assertFalse(newSet.removeAll(testSet));
-		//check that newSet size is now 4
-		assertEquals(4, newSet.size());
 		
-		//Test 5: Remove no elements when test Set is empty- should be false
-		//Clear test Set
-		testSet.clear();
-		//call add several on newSet
-		addSeveral(newSet);
-		//Remove test set from newSet
-		assertFalse(newSet.removeAll(testSet));
-		//check that newSet size is now 4
-		assertEquals(4, newSet.size());
 		
 	}
-
+	/**
+	 * Test AllAll with given index
+	 */
 	@Test
 	void testAddAllIntCollectionOfQextendsE()
 	{
-		//Clear set
-		newSet.clear();
-		assertEquals(0 , newSet.size());
-	
-		//Test 1: Add collection to nonempty set at index 0
-		//Add 1 to array set
-		newSet.add(0, 1);
-		//Add 4,5 to testSet
-		addSeveral(testSet);
-		//add collection at index 0
-		assertTrue(newSet.addAll(0, testSet));
-		//check that 3 is at index 0
-		assertEquals(3, newSet.get(0));
+		//Create list containing elements not in getPopulate
+		List<Integer> newLst = new ArrayList<Integer>(Arrays.asList(5,6));
+		
+		//Test 1: Add collection at index 0
+		//create new set
+		ArraySet<Integer> newSet = getPopulated();
+		//add newLst at index 0
+		assertTrue(newSet.addAll(0, newLst));
+		//check that 5 is at index 0
+		assertEquals(5, newSet.get(0));
 		
 		//Test 2: Add collection to set at end of list
-		//clear set
-		newSet.clear();
-		newSet.add(0, 1);
+		//create new set
+		ArraySet<Integer> twoSet = getPopulated();
 		//add collection at end of the list
-		assertTrue(newSet.addAll(newSet.size(), testSet));
-		//check that 3 is at index 
-		assertEquals(9, newSet.get(newSet.size()-1));
+		assertTrue(twoSet.addAll(twoSet.size(), newLst));
+		//check that 6 is at last index 
+		assertEquals(6, twoSet.get(twoSet.size()-1));
 		
 		//Test 3: Add collection to set in the middle of list
-		//clear set
-		newSet.clear();
-		//add more elements to array
-		newSet.add(0, 1);
-		newSet.add(1,2);
-		newSet.add(2,3);
-		//add collection at end of the list
-		assertTrue(newSet.addAll(1, testSet));
-		//check that 3 is at index 
-		assertEquals(3, newSet.get(1));
+		//create new set
+		ArraySet<Integer> threeSet = getPopulated();
+		//add collection at index 1
+		assertTrue(threeSet.addAll(1, newLst));
+		//check that 5 is at index 1
+		assertEquals(5, threeSet.get(1));
 				
 	}
 }
